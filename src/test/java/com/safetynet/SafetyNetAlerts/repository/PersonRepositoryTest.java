@@ -4,6 +4,7 @@ import com.safetynet.SafetyNetAlerts.db.AccessInfos;
 import com.safetynet.SafetyNetAlerts.db.AccessInfosImpl;
 import com.safetynet.SafetyNetAlerts.db.Infos;
 import com.safetynet.SafetyNetAlerts.model.PersonModel;
+import com.safetynet.SafetyNetAlerts.service.PersonService;
 import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -15,13 +16,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PersonRepositoryTest {
 
+    String pathReel = "C:\\Users\\argan\\IdeaProjects\\SafetyNetAlerts\\src\\main\\resources\\infos.json";
 
-    private PersonRepository personRepository = new PersonRepository();
 
     @Test
     void getPersonsList() throws IOException, ParseException {
-        List<PersonModel> personModelList = personRepository.getPersonsList();
-        Assert.assertEquals(personModelList, 23);
+
     }
 
     @Test

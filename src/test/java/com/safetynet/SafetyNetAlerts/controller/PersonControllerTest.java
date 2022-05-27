@@ -17,8 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PersonControllerTest {
 
-    @Value("${path.reel}")
-    private String pathReel;
+    String pathReel = "C:\\Users\\argan\\IdeaProjects\\SafetyNetAlerts\\src\\main\\resources\\infos.json";
 
     private AccessInfos accessInfos = new AccessInfosImpl();
     private PersonController personController = new PersonController();
