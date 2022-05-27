@@ -32,5 +32,4 @@ public class Database {
         this.medicalrecords = medicalrecords;
     }
 
-
 }

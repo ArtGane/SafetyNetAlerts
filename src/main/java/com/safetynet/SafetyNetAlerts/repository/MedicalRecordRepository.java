@@ -5,6 +5,7 @@ import com.safetynet.SafetyNetAlerts.db.Infos;
 import com.safetynet.SafetyNetAlerts.model.MedicalRecordModel;
 import com.safetynet.SafetyNetAlerts.model.PersonModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,10 +13,13 @@ import java.util.List;
 @Repository
 public class MedicalRecordRepository {
 
+    @Value("${path.reel}")
+    private String pathReel;
+
     @Autowired
     private AccessInfosImpl accesInfos;
 
-    Infos infos = accesInfos.getInfos();
+    Infos infos = accesInfos.getInfos(pathReel);
 
     public List<MedicalRecordModel> getMedicalRecordList(){
         return infos.getMedicalrecords();
@@ -32,7 +36,7 @@ public class MedicalRecordRepository {
         medicalrecords.remove(medicalRecordModel);
         infos.setMedicalrecords(medicalrecords);
 
-        accesInfos.setInfos(infos);
+        accesInfos.setInfos(pathReel, infos);
 
     }
 
@@ -42,7 +46,7 @@ public class MedicalRecordRepository {
 
         medicalrecords.add(medicalRecordModel);
         infos.setMedicalrecords(medicalrecords);
-        accesInfos.setInfos(infos);
+        accesInfos.setInfos(pathReel, infos);
     }
 
     public void updateMedicalRecord(MedicalRecordModel medicalRecordModel) {
@@ -53,7 +57,7 @@ public class MedicalRecordRepository {
         medicalrecords.remove(foundMedicalRecord);
         medicalrecords.add(medicalRecordModel);
         infos.setMedicalrecords(medicalrecords);
-        accesInfos.setInfos(infos);
+        accesInfos.setInfos(pathReel, infos);
 
     }
 }

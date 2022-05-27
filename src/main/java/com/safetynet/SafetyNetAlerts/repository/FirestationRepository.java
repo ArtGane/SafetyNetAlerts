@@ -3,8 +3,8 @@ package com.safetynet.SafetyNetAlerts.repository;
 import com.safetynet.SafetyNetAlerts.db.AccessInfosImpl;
 import com.safetynet.SafetyNetAlerts.db.Infos;
 import com.safetynet.SafetyNetAlerts.model.FirestationModel;
-import com.safetynet.SafetyNetAlerts.model.MedicalRecordModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,10 +12,13 @@ import java.util.List;
 @Repository
 public class FirestationRepository {
 
+    @Value("${path.reel}")
+    private String pathReel;
+
     @Autowired
     private AccessInfosImpl accesInfos;
 
-    Infos infos = accesInfos.getInfos();
+    Infos infos = accesInfos.getInfos(pathReel);
 
     public List<FirestationModel> getFirestationList() {
         return infos.getFirestations();
@@ -32,7 +35,7 @@ public class FirestationRepository {
         firestations.remove(firestationModel);
         infos.setFirestations(firestations);
 
-        accesInfos.setInfos(infos);
+        accesInfos.setInfos(pathReel, infos);
 
     }
 
@@ -41,7 +44,7 @@ public class FirestationRepository {
         List<FirestationModel> firestations = infos.getFirestations();
         firestations.add(firestationModel);
         infos.setFirestations(firestations);
-        accesInfos.setInfos(infos);
+        accesInfos.setInfos(pathReel, infos);
     }
 
     public void updateFirestation(FirestationModel firestationModel) {
@@ -51,7 +54,7 @@ public class FirestationRepository {
         firestation.remove(foundFirestation);
         firestation.add(firestationModel);
         infos.setFirestations(firestation);
-        accesInfos.setInfos(infos);
+        accesInfos.setInfos(pathReel, infos);
 
     }
 }

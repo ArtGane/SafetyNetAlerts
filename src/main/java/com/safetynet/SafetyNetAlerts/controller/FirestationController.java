@@ -1,9 +1,7 @@
 package com.safetynet.SafetyNetAlerts.controller;
 
 import com.safetynet.SafetyNetAlerts.model.FirestationModel;
-import com.safetynet.SafetyNetAlerts.model.MedicalRecordModel;
 import com.safetynet.SafetyNetAlerts.repository.FirestationRepository;
-import com.safetynet.SafetyNetAlerts.repository.MedicalRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

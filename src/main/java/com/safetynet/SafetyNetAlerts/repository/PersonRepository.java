@@ -4,6 +4,7 @@ import com.safetynet.SafetyNetAlerts.db.AccessInfosImpl;
 import com.safetynet.SafetyNetAlerts.db.Infos;
 import com.safetynet.SafetyNetAlerts.model.PersonModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,10 +12,12 @@ import java.util.List;
 @Repository
 public class PersonRepository {
 
-    @Autowired
-    private AccessInfosImpl accesInfos;
+    @Value("${path.reel}")
+    private String pathReel;
 
-    Infos infos = accesInfos.getInfos();
+    private AccessInfosImpl accesInfos = new AccessInfosImpl();
+
+    Infos infos = accesInfos.getInfos(pathReel);
 
     public List<PersonModel> getPersonsList(){
         return infos.getPersons();
@@ -31,7 +34,7 @@ public class PersonRepository {
         persons.remove(foundPerson);
         infos.setPersons(persons);
 
-        accesInfos.setInfos(infos);
+        accesInfos.setInfos(pathReel, infos);
 
     }
 
@@ -41,7 +44,7 @@ public class PersonRepository {
 
         persons.add(person);
         infos.setPersons(persons);
-        accesInfos.setInfos(infos);
+        accesInfos.setInfos(pathReel, infos);
     }
 
     public void updatePerson(PersonModel personModel) {
@@ -52,7 +55,7 @@ public class PersonRepository {
         persons.remove(foundPerson);
         persons.add(personModel);
         infos.setPersons(persons);
-        accesInfos.setInfos(infos);
+        accesInfos.setInfos(pathReel, infos);
 
     }
 }
