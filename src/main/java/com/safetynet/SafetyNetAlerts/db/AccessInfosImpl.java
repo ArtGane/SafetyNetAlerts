@@ -10,10 +10,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Component;
 
 
 import java.io.*;
 
+@Component
 public class AccessInfosImpl implements AccessInfos {
 
     private final Logger logger = LogManager.getLogger(AccessInfosImpl.class);
@@ -44,7 +46,6 @@ public class AccessInfosImpl implements AccessInfos {
         JSONArray firestationArray = new JSONArray();
         JSONArray medicalRecordsArray = new JSONArray();
         JSONObject jsonObjectList = new JSONObject();
-
 
         try {
             FileWriter writer = new FileWriter(path);

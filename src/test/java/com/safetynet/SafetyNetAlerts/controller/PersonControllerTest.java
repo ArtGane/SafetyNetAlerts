@@ -17,16 +17,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PersonControllerTest {
 
-    String pathReel = "C:\\Users\\argan\\IdeaProjects\\SafetyNetAlerts\\src\\main\\resources\\infos.json";
+    @Value("${path.reel}")
+    String pathReel;
 
     private AccessInfos accessInfos = new AccessInfosImpl();
     private PersonController personController = new PersonController();
-    private PersonModel personModel = new PersonModel();
+//    private PersonModel personModel = new PersonModel();
 
     @Test
     void updatePerson() throws IOException, ParseException {
         accessInfos.getInfos(pathReel);
-        personController.updatePerson(personModel);
+//        personController.updatePerson(personModel);
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.safetynet.SafetyNetAlerts.service;
 import com.safetynet.SafetyNetAlerts.db.AccessInfosImpl;
 import com.safetynet.SafetyNetAlerts.db.Infos;
 import com.safetynet.SafetyNetAlerts.model.FirestationModel;
+import com.safetynet.SafetyNetAlerts.model.PersonModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,17 +19,21 @@ public class FirestationService {
     @Autowired
     private AccessInfosImpl accesInfos;
 
-    Infos infos = accesInfos.getInfos(pathReel);
-
     public List<FirestationModel> getFirestationList() {
+        Infos infos = accesInfos.getInfos(pathReel);
         return infos.getFirestations();
     }
 
-    public List<FirestationModel> getFirestation(FirestationModel firestationModel) {
-        return infos.getFirestations();
+    public FirestationModel getFirestation(int station, String address) {
+        List<FirestationModel> fireStationList = getFirestationList();
+        FirestationModel firestationModel = fireStationList.stream()
+                .filter(f -> f.getStation() == station && f.getAddress().equals(address))
+                .findFirst().orElse(null);
+        return firestationModel;
     }
 
     public void deleteFirestation(FirestationModel firestationModel) {
+        Infos infos = accesInfos.getInfos(pathReel);
 
         List<FirestationModel> firestations = infos.getFirestations();
         List<FirestationModel> foundFirestation = firestations;
@@ -40,6 +45,7 @@ public class FirestationService {
     }
 
     public void createFirestation(FirestationModel firestationModel) {
+        Infos infos = accesInfos.getInfos(pathReel);
 
         List<FirestationModel> firestations = infos.getFirestations();
         firestations.add(firestationModel);
@@ -48,6 +54,7 @@ public class FirestationService {
     }
 
     public void updateFirestation(FirestationModel firestationModel) {
+        Infos infos = accesInfos.getInfos(pathReel);
 
         List<FirestationModel> firestation = infos.getFirestations();
         List<FirestationModel> foundFirestation = firestation;

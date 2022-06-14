@@ -12,23 +12,27 @@ import java.util.List;
 
 @Service
 public class MedicalRecordService {
+
     @Value("${path.reel}")
     private String pathReel;
 
     @Autowired
     private AccessInfosImpl accesInfos;
 
-    Infos infos = accesInfos.getInfos(pathReel);
-
     public List<MedicalRecordModel> getMedicalRecordList(){
+        Infos infos = accesInfos.getInfos(pathReel);
+
         return infos.getMedicalrecords();
     }
 
     public List<MedicalRecordModel> getMedicalRecord(MedicalRecordModel medicalRecordModel) {
+        Infos infos = accesInfos.getInfos(pathReel);
+
         return infos.getMedicalrecords();
     }
 
     public void deleteMedicalRecord(MedicalRecordModel medicalRecordModel) {
+        Infos infos = accesInfos.getInfos(pathReel);
 
         List<MedicalRecordModel> medicalrecords = infos.getMedicalrecords();
         List<MedicalRecordModel> foundMedicalRecord = medicalrecords;
@@ -40,6 +44,7 @@ public class MedicalRecordService {
     }
 
     public void createMedicalRecord(MedicalRecordModel medicalRecordModel) {
+        Infos infos = accesInfos.getInfos(pathReel);
 
         List<MedicalRecordModel> medicalrecords = infos.getMedicalrecords();
 
@@ -49,6 +54,7 @@ public class MedicalRecordService {
     }
 
     public void updateMedicalRecord(MedicalRecordModel medicalRecordModel) {
+        Infos infos = accesInfos.getInfos(pathReel);
 
         List<MedicalRecordModel> medicalrecords = infos.getMedicalrecords();
 

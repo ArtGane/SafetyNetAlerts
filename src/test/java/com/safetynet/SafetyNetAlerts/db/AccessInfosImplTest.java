@@ -74,27 +74,33 @@ public class AccessInfosImplTest {
         Assert.assertEquals(getInfos.getPersons().get(0).getFirstName(), "Mia");
     }
 
-//    @Test
-//    public void setInfosMedicalRecordsTest() throws IOException, ParseException {
-//        Infos infos = new Infos();
-//        List<FirestationModel> firestationList = new ArrayList<>();
-//        List<PersonModel> personList = new ArrayList<>();
-//        List<MedicalRecordModel> medicalRecordList = new ArrayList<>();
-//        MedicalRecordModel medicalRecordModel = new MedicalRecordModel();
-//
-//        medicalRecordModel.setFirstName("Mia");
-//        medicalRecordModel.setLastName("Ou");
-//        medicalRecordModel.setBirthdate("12/12/1986");
-//        medicalRecordModel.setMedications(new ArrayList<String>("diabete", "nanisme"));
-//        medicalRecordModel.setAllergies(new ArrayList<String>("bees", "jellyfish"));
-//
-//        medicalRecordList.add(medicalRecordModel);
-//        infos.setFirestations(firestationList);
-//        infos.setPersons(personList);
-//        infos.setMedicalrecords(medicalRecordList);
-//
-//        accessInfos.setInfos(pathTest, infos);
-//        Infos getInfos = accessInfos.getInfos(pathTest);
-//        Assert.assertEquals(getInfos.getPersons().get(0).getFirstName(), "Mia");
-//    }
+    @Test
+    public void setInfosMedicalRecordsTest() throws IOException, ParseException {
+        Infos infos = new Infos();
+
+        List<FirestationModel> firestationList = new ArrayList<>();
+        List<PersonModel> personList = new ArrayList<>();
+        List<MedicalRecordModel> medicalRecordList = new ArrayList<>();
+
+        MedicalRecordModel medicalRecordModel = new MedicalRecordModel();
+        List<String> medications = new ArrayList<>();
+        String medication = "medusoïte";
+        medications.add(medication);
+
+        medicalRecordModel.setFirstName("Mia");
+        medicalRecordModel.setLastName("Ou");
+        medicalRecordModel.setBirthdate("12/12/1986");
+        medicalRecordModel.setMedications(medications);
+        medicalRecordModel.setAllergies(new ArrayList<String>());
+
+        medicalRecordList.add(medicalRecordModel);
+        infos.setFirestations(firestationList);
+        infos.setPersons(personList);
+        infos.setMedicalrecords(medicalRecordList);
+
+        accessInfos.setInfos(pathTest, infos);
+        Infos getInfos = accessInfos.getInfos(pathTest);
+        Assert.assertEquals(getInfos.getMedicalrecords().get(0).getMedications(), medications);
+        Assert.assertEquals(medications.get(0), "medusoïte");
+    }
 }
