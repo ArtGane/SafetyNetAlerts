@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -34,8 +35,7 @@ public class PersonService {
     public PersonModel getPerson(String lastname, String firstname) throws IOException, ParseException {
         List<PersonModel> personModelList = getPersonsList();
         PersonModel personModel = personModelList.stream()
-                .filter(p -> p.getLastName().equals(lastname) && p.getFirstName().equals(firstname))
-                .findFirst().orElse(null);
+                .filter(p -> p.getLastName().equals(lastname) && p.getFirstName().equals(firstname)).findFirst().orElse(null);
         return personModel;
     }
 
@@ -70,7 +70,6 @@ public class PersonService {
 
         infos.setPersons(persons);
         accesInfos.setInfos(pathReel, infos);
-
     }
 
 }

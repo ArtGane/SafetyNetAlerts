@@ -14,4 +14,11 @@ public class MedicalRecordModel {
     private List<String> medications;
     private List<String> allergies;
 
+    public MedicalRecordModel(String lastName, String firstName) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+    }
+
+    public MedicalRecordModel() {
+    }
 }
