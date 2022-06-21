@@ -264,10 +264,6 @@
       "station": 1
     },
     {
-      "address": "112 Steppes Pl",
-      "station": 4
-    },
-    {
       "address": "947 E. Rose Dr",
       "station": 1
     },
@@ -278,6 +274,14 @@
     {
       "address": "951 LoneTree Rd",
       "station": 2
+    },
+    {
+      "address": "3 rue avec du feu",
+      "station": 3
+    },
+    {
+      "address": "3 rue avec du feu",
+      "station": 1
     }
   ],
   "medicalrecords": [
@@ -330,13 +334,6 @@
       "medications": [
         "tetracyclaz:650mg"
       ]
-    },
-    {
-      "allergies": [],
-      "firstName": "Jonanathan",
-      "lastName": "Marrack",
-      "birthdate": "01\/03\/1989",
-      "medications": []
     },
     {
       "allergies": [],
@@ -460,13 +457,6 @@
     },
     {
       "allergies": [],
-      "firstName": "Shawna",
-      "lastName": "Stelzer",
-      "birthdate": "07\/08\/1980",
-      "medications": []
-    },
-    {
-      "allergies": [],
       "firstName": "Kendrik",
       "lastName": "Stelzer",
       "birthdate": "03\/06\/2014",
@@ -489,6 +479,24 @@
       "birthdate": "08\/06\/1945",
       "medications": [
         "tradoxidine:400mg"
+      ]
+    },
+    {
+      "allergies": [],
+      "firstName": "Shawna",
+      "lastName": "Stelzer",
+      "birthdate": "03\/05\/1974",
+      "medications": []
+    },
+    {
+      "allergies": [
+        "nillacilan"
+      ],
+      "firstName": "Jonanathan",
+      "lastName": "Marrack",
+      "birthdate": "13\/13\/1666",
+      "medications": [
+        "doliprane 1000mg"
       ]
     }
   ]
