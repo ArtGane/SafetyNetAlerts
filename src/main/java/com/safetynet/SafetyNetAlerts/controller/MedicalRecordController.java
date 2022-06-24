@@ -12,8 +12,11 @@ import java.io.IOException;
 @RestController
 public class MedicalRecordController {
 
-    @Autowired
-    private MedicalRecordService medicalRecordService;
+    private final MedicalRecordService medicalRecordService;
+
+    public MedicalRecordController(MedicalRecordService medicalRecordService) {
+        this.medicalRecordService = medicalRecordService;
+    }
 
     @PutMapping("medicalrecords")
     public String updateMedicalRecord(@RequestBody MedicalRecordModel medicalRecordModel) throws IOException, ParseException {

@@ -60,7 +60,6 @@ public class FirestationService {
         infos.setFirestations(firestationModelList);
         accesInfos.setInfos(pathReel, infos);
 
-        Assert.assertTrue(firestationModelList.contains(firestation));
         logger.info(firestationModelList);
     }
 

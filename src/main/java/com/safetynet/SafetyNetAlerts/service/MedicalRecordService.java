@@ -47,7 +47,6 @@ public class MedicalRecordService {
 
         accesInfos.setInfos(pathReel, infos);
 
-        Assert.assertFalse(medicalRecordModelList.contains(medicalrecord));
         logger.info(medicalRecordModelList);
     }
 
@@ -57,7 +56,6 @@ public class MedicalRecordService {
         infos.setMedicalrecords(medicalRecordModelList);
         accesInfos.setInfos(pathReel, infos);
 
-        Assert.assertTrue(medicalRecordModelList.contains(medicalrecord));
         logger.info(medicalRecordModelList);
     }
 

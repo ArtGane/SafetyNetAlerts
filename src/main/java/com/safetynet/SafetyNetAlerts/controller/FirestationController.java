@@ -12,8 +12,11 @@ import java.io.IOException;
 @RestController
 public class FirestationController {
 
-    @Autowired
-    private FirestationService firestationService;
+    private final FirestationService firestationService;
+
+    public FirestationController(FirestationService firestationService) {
+        this.firestationService = firestationService;
+    }
 
     @PutMapping("firestations")
     public String updateFirestations(@RequestBody FirestationModel firestationModel) throws IOException, ParseException {

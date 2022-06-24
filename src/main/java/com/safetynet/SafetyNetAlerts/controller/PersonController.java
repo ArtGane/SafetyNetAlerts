@@ -15,9 +15,11 @@ import java.util.Optional;
 @RestController
 public class PersonController {
 
+    private final PersonService personService;
 
-    @Autowired
-    private PersonService personService;
+    public PersonController(PersonService personService) {
+        this.personService = personService;
+    }
 
     @PutMapping("persons")
     public PersonModel updatePerson(@RequestBody PersonModel personModel) throws IOException, ParseException {
@@ -37,13 +39,4 @@ public class PersonController {
         return "This person is probably dead";
     }
 
-//    @DeleteMapping(path = "{firstName}_{lastName}")
-//    public void deletePerson(
-//            @PathVariable("firstName") String firstName,
-//            @PathVariable("lastName") String lastName)
-//    {
-//        personService.deletePerson(firstName, lastName);
-//    }
-
-    // MockMVC et @Mock
 }

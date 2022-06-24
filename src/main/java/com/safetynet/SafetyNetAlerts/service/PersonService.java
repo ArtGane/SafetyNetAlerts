@@ -47,8 +47,6 @@ public class PersonService {
 
         accesInfos.setInfos(pathReel, infos);
 
-        Assert.assertFalse(personModelList.contains(person));
-        logger.info(personModelList);
     }
 
     public void createPerson(PersonModel person) throws IOException, ParseException {
