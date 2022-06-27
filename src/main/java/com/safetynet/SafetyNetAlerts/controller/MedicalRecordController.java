@@ -18,19 +18,19 @@ public class MedicalRecordController {
         this.medicalRecordService = medicalRecordService;
     }
 
-    @PutMapping("medicalrecords")
+    @PutMapping
     public String updateMedicalRecord(@RequestBody MedicalRecordModel medicalRecordModel) throws IOException, ParseException {
         medicalRecordService.updateMedicalRecord(medicalRecordModel);
         return "Well done, you're more sick now !";
     }
 
-    @PostMapping("medicalrecords")
+    @PostMapping
     public ResponseEntity<String> createMedicalRecord(@RequestBody MedicalRecordModel medicalRecordModel) throws IOException, ParseException {
         medicalRecordService.createMedicalRecord(medicalRecordModel);
         return ResponseEntity.ok("Medical records ceated");
     }
 
-    @DeleteMapping("medicalrecords")
+    @DeleteMapping
     public String deleteMedicalRecord(@RequestBody MedicalRecordModel medicalRecordModel) throws IOException, ParseException {
         medicalRecordService.deleteMedicalRecord(medicalRecordModel);
         return "This medical records is probably nothing";

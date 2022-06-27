@@ -15,25 +15,22 @@ import java.util.Optional;
 @RestController
 public class PersonController {
 
-    private final PersonService personService;
+    @Autowired
+    private PersonService personService;
 
-    public PersonController(PersonService personService) {
-        this.personService = personService;
-    }
-
-    @PutMapping("persons")
+    @PutMapping
     public PersonModel updatePerson(@RequestBody PersonModel personModel) throws IOException, ParseException {
         personService.updatePerson(personModel);
         return personModel;
     }
 
-    @PostMapping("persons")
+    @PostMapping
     public ResponseEntity<String> createPerson(@RequestBody PersonModel personModel) throws IOException, ParseException {
         personService.createPerson(personModel);
         return ResponseEntity.ok("Person ceated");
     }
 
-    @DeleteMapping("persons")
+    @DeleteMapping
     public String deletePerson(@RequestBody PersonModel personModel) throws IOException, ParseException {
         personService.deletePerson(personModel);
         return "This person is probably dead";
