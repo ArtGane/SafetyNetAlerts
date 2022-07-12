@@ -34,7 +34,7 @@ public class FirestationService {
         return infos.getFirestations();
     }
 
-    public FirestationModel getFirestation(int station, String address) throws IOException, ParseException {
+    public FirestationModel getFirestation(String station, String address) throws IOException, ParseException {
         List<FirestationModel> firestationList = getFirestationsList();
         FirestationModel firestationModel = firestationList.stream()
                 .filter(f -> f.getStation() == station && f.getAddress().equals(address)).findFirst().orElse(null);

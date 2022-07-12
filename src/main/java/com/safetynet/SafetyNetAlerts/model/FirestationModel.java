@@ -6,9 +6,9 @@ import lombok.Data;
 public class FirestationModel {
 
     private String address;
-    private int station;
+    private String station;
 
-    public FirestationModel(int station, String address) {
+    public FirestationModel(String station, String address) {
         this.station = station;
         this.address = address;
     }

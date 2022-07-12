@@ -20,17 +20,17 @@ class FirestationServiceTest {
 
     @Test
     void getFirestationTest() throws IOException, ParseException {
-        FirestationModel firestationModel = firestationService.getFirestation(3, "112 Steppes Pl");
-        Assert.assertEquals(3, firestationModel.getStation());
+        FirestationModel firestationModel = firestationService.getFirestation("3", "112 Steppes Pl");
+        Assert.assertEquals("3", firestationModel.getStation());
         Assert.assertEquals("112 Steppes Pl", firestationModel.getAddress());
     }
 
     @Test
     void deleteFirestationTest() throws IOException, ParseException {
-        FirestationModel firestationModelTest = new FirestationModel(3, "3 rue avec du feu");
+        FirestationModel firestationModelTest = new FirestationModel("3", "3 rue avec du feu");
         firestationService.createFirestation(firestationModelTest);
 
-        FirestationModel firestationModel = firestationService.getFirestation(3, "3 rue avec du feu");
+        FirestationModel firestationModel = firestationService.getFirestation("3", "3 rue avec du feu");
         firestationService.deleteFirestation(firestationModel);
 
         Assert.assertFalse(firestationService.getFirestationsList().contains(firestationModel));
@@ -38,7 +38,7 @@ class FirestationServiceTest {
 
     @Test
     void createFirestationTest() throws IOException, ParseException {
-        FirestationModel firestationModel = new FirestationModel(3, "3 rue avec du feu");
+        FirestationModel firestationModel = new FirestationModel("3", "3 rue avec du feu");
         firestationService.createFirestation(firestationModel);
 
         Assert.assertTrue(firestationService.getFirestationsList().contains(firestationModel));
@@ -48,10 +48,10 @@ class FirestationServiceTest {
 
     @Test
     void updateFirestationTest() throws IOException, ParseException {
-        FirestationModel firestationModelTest = new FirestationModel(3, "3 rue avec du feu");
+        FirestationModel firestationModelTest = new FirestationModel("3", "3 rue avec du feu");
         firestationService.createFirestation(firestationModelTest);
 
-        FirestationModel firestationModel = firestationService.getFirestation(3, "3 rue avec du feu");
+        FirestationModel firestationModel = firestationService.getFirestation("3", "3 rue avec du feu");
         firestationModel.setAddress("746 Tonwtonw Dr Wings");
         firestationService.updateFirestation(firestationModel);
 

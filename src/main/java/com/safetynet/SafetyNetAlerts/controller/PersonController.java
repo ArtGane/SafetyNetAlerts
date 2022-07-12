@@ -25,9 +25,9 @@ public class PersonController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createPerson(@RequestBody PersonModel personModel) throws IOException, ParseException {
+    public PersonModel createPerson(@RequestBody PersonModel personModel) throws IOException, ParseException {
         personService.createPerson(personModel);
-        return ResponseEntity.ok("Person ceated");
+        return personModel;
     }
 
     @DeleteMapping

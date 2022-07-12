@@ -36,7 +36,7 @@ public class AccessInfosImplTest {
         FirestationModel firestationModel = new FirestationModel();
 
         firestationModel.setAddress("21 rue des meduses");
-        firestationModel.setStation(2);
+        firestationModel.setStation("2");
 
         firestationList.add(firestationModel);
         infos.setFirestations(firestationList);
