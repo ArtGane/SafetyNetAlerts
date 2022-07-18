@@ -12,4 +12,5 @@ public class SafetyNetAlertsApplication {
 		SpringApplication.run(SafetyNetAlertsApplication.class, args);
 	}
 
+	// Urls : https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/DAJava_P5/URLs.pdf
 }
