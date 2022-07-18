@@ -9,14 +9,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+@RequestMapping("/medicalrecords")
 @RestController
 public class MedicalRecordController {
 
-    private final MedicalRecordService medicalRecordService;
-
-    public MedicalRecordController(MedicalRecordService medicalRecordService) {
-        this.medicalRecordService = medicalRecordService;
-    }
+   @Autowired
+   private MedicalRecordService medicalRecordService;
 
     @PutMapping
     public String updateMedicalRecord(@RequestBody MedicalRecordModel medicalRecordModel) throws IOException, ParseException {

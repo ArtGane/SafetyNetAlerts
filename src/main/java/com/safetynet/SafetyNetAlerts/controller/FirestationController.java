@@ -9,14 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+@RequestMapping("/firestations")
 @RestController
 public class FirestationController {
-
-    private final FirestationService firestationService;
-
-    public FirestationController(FirestationService firestationService) {
-        this.firestationService = firestationService;
-    }
+    @Autowired
+    private FirestationService firestationService;
 
     @PutMapping("firestations")
     public String updateFirestations(@RequestBody FirestationModel firestationModel) throws IOException, ParseException {
