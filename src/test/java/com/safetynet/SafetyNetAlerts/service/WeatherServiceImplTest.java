@@ -1,9 +1,6 @@
 package com.safetynet.SafetyNetAlerts.service;
 
-import com.safetynet.SafetyNetAlerts.dto.ChildAlertDto;
-import com.safetynet.SafetyNetAlerts.dto.HomeDto;
-import com.safetynet.SafetyNetAlerts.dto.PersonInfoDto;
-import com.safetynet.SafetyNetAlerts.dto.PersonStationMedicalDto;
+import com.safetynet.SafetyNetAlerts.dto.*;
 import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -17,7 +14,9 @@ class WeatherServiceImplTest {
     WeatherService weatherService = new WeatherServiceImpl();
 
     @Test
-    void getPersonsInfosWithFirestationNumTest() {
+    void getPersonsInfosWithFirestationNumTest() throws IOException, ParseException {
+        List<StationsPersonsDto> stationsPersonsDtoList = weatherService.getPersonsInfosWithFirestationNum("2");
+        Assert.assertEquals("", stationsPersonsDtoList.toString());
     }
 
     @Test
@@ -51,7 +50,7 @@ class WeatherServiceImplTest {
 
     @Test
     void getPersonInfoTest() throws IOException, ParseException {
-        PersonInfoDto listPersons = weatherService.getPersonInfo("Boyd", "Felicia");
+        PersonInfoDto listPersons = weatherService.getPersonInfo("Felicia", "Boyd");
         Assert.assertEquals("PersonInfoDto(listPersonsInfo={PersonModel(firstName=John, lastName=Boyd, address=1509 Culver St, city=Culver, zip=97451, phone=841-874-6512, email=jaboyd@email.com)=MedicalRecordModel(firstName=Felicia, lastName=Boyd, birthdate=01/08/1986, medications=[tetracyclaz:650mg], allergies=[xilliathal])})", listPersons.toString());
     }
 

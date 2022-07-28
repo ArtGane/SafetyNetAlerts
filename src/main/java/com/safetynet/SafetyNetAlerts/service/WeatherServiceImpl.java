@@ -24,16 +24,29 @@ public class WeatherServiceImpl implements WeatherService {
     private FirestationService firestationService = new FirestationService();
 
     @Override
-    public List<String> getPersonsInfosWithFirestationNum(String stationNum) {
+    public List<StationsPersonsDto> getPersonsInfosWithFirestationNum(String stationNum) throws IOException, ParseException {
 //        Cette url doit retourner une liste des personnes couvertes par la caserne de pompiers correspondante.
 //                Donc, si le numéro de station = 1, elle doit renvoyer les habitants couverts par la station numéro 1. La liste
 //        doit inclure les informations spécifiques suivantes : prénom, nom, adresse, numéro de téléphone. De plus,
 //        elle doit fournir un décompte du nombre d'adultes et du nombre d'enfants (tout individu âgé de 18 ans ou
 //                moins) dans la zone desservie.
 
+        List<PersonModel> personModelList = personService.getPersonsList();
+        List<FirestationModel> firestationModelList = firestationService.getFirestationsList();
+        List<StationsPersonsDto> stationsPersonsDtoList = new ArrayList<>();
+
+        List<String> addressList = firestationModelList.stream()
+                .filter(f -> f.getStation().equals(stationNum)).map(f -> f.getAddress()).collect(Collectors.toList());
+
+        for (String address : addressList) {
+            StationsPersonsDto stationsPersonsDto = new StationsPersonsDto();
+            List<PersonModel> personsAdresses = personModelList.stream()
+                    .filter(p -> p.getAddress().equals(address)).collect(Collectors.toList());
+        }
+
         log.info("");
 
-        return null;
+        return stationsPersonsDtoList;
     }
 
     @Override
@@ -70,20 +83,28 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
     @Override
-    public List<String> getFirestationPhoneAlert(String firestationNumber) throws IOException, ParseException {
-        List<FirestationModel> firestationModelList = firestationService.getFirestationsList();
-        List<PersonModel> personModelList = personService.getPersonsList();
-        List<String> addressPersons = new ArrayList<>();
+    public List<String> getFirestationPhoneAlert(String firestationNumber) {
+        List<String> phonePersons = new ArrayList<>();
 
-        List<String> numStationList = firestationModelList.stream()
-                .filter(f -> f.getStation().equals(firestationNumber)).map(f -> f.getAddress()).collect(Collectors.toList());
+        try {
+            List<FirestationModel> firestationModelList = firestationService.getFirestationsList();
+            List<PersonModel> personModelList = personService.getPersonsList();
 
-        for (String address : numStationList) {
-            addressPersons = personModelList.stream()
-                    .filter(p -> p.getAddress().equals(address)).map(p -> p.getPhone()).collect(Collectors.toList());
+            List<String> numStationList = firestationModelList.stream()
+                    .filter(f -> f.getStation().equals(firestationNumber)).map(f -> f.getAddress()).collect(Collectors.toList());
+
+            for (String address : numStationList) {
+                phonePersons = personModelList.stream()
+                        .filter(p -> p.getAddress().equals(address)).map(p -> p.getPhone()).collect(Collectors.toList());
+            }
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
 
-        return addressPersons;
+        return phonePersons;
     }
 
     @Override
@@ -156,7 +177,7 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
     @Override
-    public PersonInfoDto getPersonInfo(String lastname, String firstname) throws IOException, ParseException {
+    public PersonInfoDto getPersonInfo(String firstname, String lastname) throws IOException, ParseException {
         List<MedicalRecordModel> medicalRecordModelList = medicalRecordService.getMedicalRecordsList();
         List<PersonModel> personModelList = personService.getPersonsList();
         HashMap<PersonModel, MedicalRecordModel> finalList = new HashMap<>();
@@ -174,6 +195,7 @@ public class WeatherServiceImpl implements WeatherService {
                         .findAny().orElseThrow();
 
                 finalList.put(infosPerson, medicalRecordModel);
+                log.info("Person with informations well added !");
             }
         }
 
@@ -183,13 +205,25 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
     @Override
-    public List<String> getEmailByCity(String city) throws IOException, ParseException {
-        List<PersonModel> personModelList = personService.getPersonsList();
+    public List<String> getEmailByCity(String city) {
+        List<String> emailList;
+        try {
+            List<PersonModel> personModelList = personService.getPersonsList();
 
-        List<String> emailList = personModelList.stream()
-                .filter(p -> p.getCity().equals(city)).map(p -> p.getEmail()).toList();
+            emailList = personModelList.stream()
+                    .filter(p -> p.getCity().equals(city)).map(p -> p.getEmail()).toList();
+
+        }
+         catch (IOException e) {
+             log.error("");
+             throw new RuntimeException(e);
+         } catch (ParseException e) {
+            log.error("");
+            throw new RuntimeException(e);
+        }
 
         return emailList;
+
     }
 
 }
