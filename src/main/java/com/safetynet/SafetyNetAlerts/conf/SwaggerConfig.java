@@ -15,3 +15,5 @@ import org.springframework.context.annotation.Configuration;
 //                .build();
 //    }
 //}
+
+//OpenAPI https://www.baeldung.com/spring-rest-openapi-documentation
