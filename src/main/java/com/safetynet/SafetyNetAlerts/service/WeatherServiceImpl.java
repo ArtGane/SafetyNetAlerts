@@ -61,8 +61,7 @@ public class WeatherServiceImpl implements WeatherService {
 
         for (PersonModel personModel : allPersonsAddress) {
             MedicalRecordModel medicalRecord = medicalRecordService.getMedicalRecord(personModel.getLastName(), personModel.getFirstName());
-            int year = Utils.extractYear(medicalRecord.getBirthdate());
-            int age = Utils.calculateAge(year);
+            int age = Utils.getAge(medicalRecord.getBirthdate());
 
             if (age <= 18) {
                 ChildDto child = new ChildDto();
@@ -97,8 +96,7 @@ public class WeatherServiceImpl implements WeatherService {
                 phonePersons = personModelList.stream()
                         .filter(p -> p.getAddress().equals(address)).map(p -> p.getPhone()).collect(Collectors.toList());
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -158,8 +156,7 @@ public class WeatherServiceImpl implements WeatherService {
 
             for (PersonModel person : personsAdresses) {
                 MedicalRecordModel medicalRecordModel = medicalRecordService.getMedicalRecord(person.getLastName(), person.getFirstName());
-                int year = Utils.extractYear(medicalRecordModel.getBirthdate());
-                int age = Utils.calculateAge(year);
+                int age = Utils.getAge(medicalRecordModel.getBirthdate());
 
                 homeDto.setName(person.getLastName());
                 homeDto.setPhoneNumber(person.getPhone());
@@ -180,26 +177,34 @@ public class WeatherServiceImpl implements WeatherService {
     public PersonInfoDto getPersonInfo(String firstname, String lastname) throws IOException, ParseException {
         List<MedicalRecordModel> medicalRecordModelList = medicalRecordService.getMedicalRecordsList();
         List<PersonModel> personModelList = personService.getPersonsList();
-        HashMap<PersonModel, MedicalRecordModel> finalList = new HashMap<>();
 
         PersonInfoDto personInfoDto = new PersonInfoDto();
 
         for (PersonModel infosPerson : personModelList) {
             infosPerson = personModelList.stream()
                     .filter(p -> p.getLastName().equals(lastname))
+                    .filter(p -> p.getFirstName().equals(firstname))
                     .findAny().orElseThrow();
+
             for (MedicalRecordModel medicalRecordModel : medicalRecordModelList) {
                 medicalRecordModel = medicalRecordModelList.stream()
                         .filter(m -> m.getLastName().equals(lastname))
                         .filter(m -> m.getFirstName().equals(firstname))
                         .findAny().orElseThrow();
 
-                finalList.put(infosPerson, medicalRecordModel);
+                int age = Utils.getAge(medicalRecordModel.getBirthdate());
+
+                personInfoDto.setLastname(infosPerson.getLastName());
+                personInfoDto.setFirstname(infosPerson.getFirstName());
+                personInfoDto.setAddress(infosPerson.getAddress());
+                personInfoDto.setAge(age);
+                personInfoDto.setMail(infosPerson.getEmail());
+                personInfoDto.setMedications(medicalRecordModel.getMedications());
+                personInfoDto.setAllergies(medicalRecordModel.getAllergies());
+
                 log.info("Person with informations well added !");
             }
         }
-
-        personInfoDto.setListPersonsInfo(finalList);
 
         return personInfoDto;
     }
@@ -213,11 +218,10 @@ public class WeatherServiceImpl implements WeatherService {
             emailList = personModelList.stream()
                     .filter(p -> p.getCity().equals(city)).map(p -> p.getEmail()).toList();
 
-        }
-         catch (IOException e) {
-             log.error("");
-             throw new RuntimeException(e);
-         } catch (ParseException e) {
+        } catch (IOException e) {
+            log.error("");
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
             log.error("");
             throw new RuntimeException(e);
         }

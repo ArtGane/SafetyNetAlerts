@@ -9,20 +9,23 @@ import java.util.List;
 
 public abstract class Utils {
 
-    public static int extractYear(String birthdate) {
+    private static int extractYear(String birthdate) {
         String[] listBirthdate = birthdate.split("/");
         return Integer.parseInt(listBirthdate[2]);
     }
 
-    public static int calculateAge(int year) {
+    private static int calculateAge(int year) {
         int dateToday = LocalDate.now().getYear();
         int calcul = dateToday - year;
         return calcul;
     }
 
+    public static int getAge(String birthdate) {
+        return calculateAge(extractYear(birthdate));
+    }
+
     public static List<HomeDto> treePersonsHome(List<HomeDto> personsHome) {
         List<HomeDto> homeDtoList = new ArrayList<>();
-
         return homeDtoList;
     }
 

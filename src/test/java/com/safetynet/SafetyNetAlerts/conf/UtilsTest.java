@@ -7,16 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class UtilsTest {
 
     @Test
-    void extractYear() {
-        int testAge = Utils.extractYear("03/06/1984");
-
-        assertEquals(1984, testAge);
+    void getAgeTest() {
+        int testAge = Utils.getAge("03/06/1984");
+        assertEquals(38, testAge);
     }
 
-    @Test
-    void calculateAgeTest() {
-       int testAge = Utils.calculateAge(1982);
-
-       assertEquals(40, testAge);
-    }
 }

@@ -5,10 +5,17 @@ import com.safetynet.SafetyNetAlerts.model.PersonModel;
 import lombok.Data;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Data
 public class PersonInfoDto {
 
-    HashMap<PersonModel, MedicalRecordModel> listPersonsInfo;
+    String lastname;
+    String firstname;
+    String address;
+    int age;
+    String mail;
+    List<String> medications;
+    List<String> allergies;
 
 }
