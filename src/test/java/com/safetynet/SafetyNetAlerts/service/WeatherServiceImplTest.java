@@ -45,7 +45,7 @@ class WeatherServiceImplTest {
         stations.add("2");
 
         List<HomeDto> homeDtoList = weatherService.getHomeStationNumber(stations);
-        Assert.assertEquals(11, homeDtoList.size());
+        Assert.assertEquals(11, homeDtoList);
     }
 
     @Test

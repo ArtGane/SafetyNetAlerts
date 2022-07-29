@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -150,27 +149,38 @@ public class WeatherServiceImpl implements WeatherService {
         }
 
         for (String address : addresses) {
-            HomeDto homeDto = new HomeDto();
             List<PersonModel> personsAdresses = personModelList.stream()
                     .filter(p -> p.getAddress().equals(address)).collect(Collectors.toList());
+            // Set initial values
+            HomeDto homeDto = new HomeDto();
+            List<HomeDtoObject> persons = new ArrayList<>();
 
             for (PersonModel person : personsAdresses) {
                 MedicalRecordModel medicalRecordModel = medicalRecordService.getMedicalRecord(person.getLastName(), person.getFirstName());
                 int age = Utils.getAge(medicalRecordModel.getBirthdate());
 
-                homeDto.setName(person.getLastName());
-                homeDto.setPhoneNumber(person.getPhone());
-                homeDto.setAge(age);
-                homeDto.setAllergies(medicalRecordModel.getAllergies());
-                homeDto.setMedications(medicalRecordModel.getMedications());
+                HomeDtoObject homeDtoObject = new HomeDtoObject();
 
-                homeDtoList.add(homeDto);
+                homeDtoObject.setLastname(person.getLastName());
+                homeDtoObject.setFirstname(person.getFirstName());
+                homeDtoObject.setPhoneNumber(person.getPhone());
+                homeDtoObject.setAge(age);
+                homeDtoObject.setAllergies(medicalRecordModel.getAllergies());
+                homeDtoObject.setMedications(medicalRecordModel.getMedications());
+
+                persons.add(homeDtoObject);
             }
+
+            // Save address and persons
+            homeDto.setAddress(address);
+            homeDto.setPersons(persons);
+
+            // Add new item
+            homeDtoList.add(homeDto);
         }
 
         return homeDtoList;
 
-        //TODO : regrouper par foyer (addresse)
     }
 
     @Override
@@ -231,4 +241,5 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
 }
+
 
