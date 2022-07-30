@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface WeatherService {
 
-    List<StationsPersonsDto> getPersonsInfosWithFirestationNum(String stationNum) throws IOException, ParseException;
+    StationsPersonsDto getPersonsInfosWithFirestationNum(String stationNum) throws IOException, ParseException;
     ChildAlertDto getSeparateChildrenFromAdults(String address) throws IOException, ParseException;
     List<String> getFirestationPhoneAlert(String firestationNumber) throws IOException, ParseException;
     PersonStationMedicalDto getPersonsAndMedicalRecordFromAddress(String address) throws IOException, ParseException;

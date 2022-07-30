@@ -22,30 +22,42 @@ public class WeatherServiceImpl implements WeatherService {
     private PersonService personService = new PersonService();
     private FirestationService firestationService = new FirestationService();
 
-    @Override
-    public List<StationsPersonsDto> getPersonsInfosWithFirestationNum(String stationNum) throws IOException, ParseException {
-//        Cette url doit retourner une liste des personnes couvertes par la caserne de pompiers correspondante.
-//                Donc, si le numéro de station = 1, elle doit renvoyer les habitants couverts par la station numéro 1. La liste
-//        doit inclure les informations spécifiques suivantes : prénom, nom, adresse, numéro de téléphone. De plus,
-//        elle doit fournir un décompte du nombre d'adultes et du nombre d'enfants (tout individu âgé de 18 ans ou
-//                moins) dans la zone desservie.
 
+    @Override
+    public StationsPersonsDto getPersonsInfosWithFirestationNum(String stationNum) throws IOException, ParseException {
         List<PersonModel> personModelList = personService.getPersonsList();
         List<FirestationModel> firestationModelList = firestationService.getFirestationsList();
-        List<StationsPersonsDto> stationsPersonsDtoList = new ArrayList<>();
 
-        List<String> addressList = firestationModelList.stream()
-                .filter(f -> f.getStation().equals(stationNum)).map(f -> f.getAddress()).collect(Collectors.toList());
+        StationsPersonsDto stationsPersonsDto = new StationsPersonsDto();
+        List<StationPersonsDtoObject> stationPersonsDtoObjectList = new ArrayList<>();
 
-        for (String address : addressList) {
-            StationsPersonsDto stationsPersonsDto = new StationsPersonsDto();
+        // Get address from number of station
+        String address = firestationModelList.stream()
+                .filter(f -> f.getStation().equals(stationNum)).map(f -> f.getAddress()).findAny().orElse(null);
+
+            stationsPersonsDto.setAddress(address);
+
             List<PersonModel> personsAdresses = personModelList.stream()
                     .filter(p -> p.getAddress().equals(address)).collect(Collectors.toList());
-        }
 
-        log.info("");
+            // Get all persons infos
+            for (PersonModel person : personsAdresses) {
+                ChildAlertDto childAlertDto = getSeparateChildrenFromAdults(person.getAddress());
 
-        return stationsPersonsDtoList;
+                StationPersonsDtoObject stationPersonsDtoObject = new StationPersonsDtoObject();
+
+                stationPersonsDtoObject.setLastname(person.getLastName());
+                stationPersonsDtoObject.setFirstname(person.getFirstName());
+                stationPersonsDtoObject.setAddress(person.getAddress());
+                stationPersonsDtoObject.setPhone(person.getPhone());
+                stationPersonsDtoObject.setChildAlertDto(childAlertDto);
+
+                stationPersonsDtoObjectList.add(stationPersonsDtoObject);
+            }
+
+        stationsPersonsDto.setStationPersonsDtoObjectList(stationPersonsDtoObjectList);
+
+        return stationsPersonsDto;
     }
 
     @Override
@@ -106,32 +118,48 @@ public class WeatherServiceImpl implements WeatherService {
 
     @Override
     public PersonStationMedicalDto getPersonsAndMedicalRecordFromAddress(String address) throws IOException, ParseException {
-        PersonStationMedicalDto personStationMedicalDto = new PersonStationMedicalDto();
-
         List<PersonModel> personModelList = personService.getPersonsList();
-        List<FirestationModel> firestationModelList = firestationService.getFirestationsList();
-        List<MedicalRecordModel> medicalRecordModel = medicalRecordService.getMedicalRecordsList();
 
+        List<PersonStationMedicalDtoObject> personStationMedicalDtoObjectList = new ArrayList<>();
+
+        // Get station
+        FirestationModel firestation = firestationService.getFirestation(address);
+
+        // Get persons infos
         List<PersonModel> livingPersons = personModelList.stream()
                 .filter(p -> p.getAddress().equals(address))
                 .collect(Collectors.toList());
 
-        List<String> stationNumber = firestationModelList.stream()
-                .filter(f -> f.getAddress().equals(address)).map(f -> f.getStation()).toList();
+        //Set station
+        PersonStationMedicalDto personStationMedicalDto = new PersonStationMedicalDto();
+        personStationMedicalDto.setStation(firestation.getStation());
 
-        for (PersonModel personModel : livingPersons) {
-            List<MedicalRecordModel> medicalRecordsPersons = medicalRecordModel.stream()
-                    .filter(m -> m.getLastName().equals(personModel.getLastName()))
-                    .filter(m -> m.getFirstName().equals(personModel.getFirstName()))
-                    .collect(Collectors.toList());
-            personStationMedicalDto.setMedicalRecordModelList(medicalRecordsPersons);
+        for (PersonModel infosPerson : livingPersons) {
+            //List of all persons
+            PersonStationMedicalDtoObject personStationMedicalDtoObject = new PersonStationMedicalDtoObject();
 
+            //Add person lastname, firstname and phone number
+            personStationMedicalDtoObject.setLastname(infosPerson.getLastName());
+            personStationMedicalDtoObject.setFirstname(infosPerson.getFirstName());
+            personStationMedicalDtoObject.setPhone(infosPerson.getPhone());
+
+            MedicalRecordModel medicalRecordModel = medicalRecordService.getMedicalRecord(infosPerson.getLastName(), infosPerson.getFirstName());
+
+            if (medicalRecordModel != null) {
+                int age = Utils.getAge(medicalRecordModel.getBirthdate());
+
+                // Add person age, medications and allergies
+                personStationMedicalDtoObject.setAge(age);
+                personStationMedicalDtoObject.setMedications(medicalRecordModel.getMedications());
+                personStationMedicalDtoObject.setAllergies(medicalRecordModel.getAllergies());
+            } else {
+                log.error("Medical record not found");
+            }
+            personStationMedicalDtoObjectList.add(personStationMedicalDtoObject);
         }
-
-        personStationMedicalDto.setListStation(stationNumber);
-        personStationMedicalDto.setPersonModelList(livingPersons);
-
+        personStationMedicalDto.setPersons(personStationMedicalDtoObjectList);
         return personStationMedicalDto;
+
     }
 
     @Override

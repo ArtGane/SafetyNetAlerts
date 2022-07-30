@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class PersonStationMedicalDto {
 
-    List<PersonModel> personModelList;
-    List<MedicalRecordModel> medicalRecordModelList;
-    List<String> listStation;
+    String station;
+    List<PersonStationMedicalDtoObject> persons;
+
 }

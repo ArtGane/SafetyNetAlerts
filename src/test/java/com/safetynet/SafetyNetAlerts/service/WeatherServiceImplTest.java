@@ -15,8 +15,8 @@ class WeatherServiceImplTest {
 
     @Test
     void getPersonsInfosWithFirestationNumTest() throws IOException, ParseException {
-        List<StationsPersonsDto> stationsPersonsDtoList = weatherService.getPersonsInfosWithFirestationNum("2");
-        Assert.assertEquals("", stationsPersonsDtoList.toString());
+        StationsPersonsDto stationsPersonsDtoList = weatherService.getPersonsInfosWithFirestationNum("2");
+        Assert.assertEquals("[]", stationsPersonsDtoList.toString());
     }
 
     @Test
@@ -34,8 +34,8 @@ class WeatherServiceImplTest {
 
     @Test
     void getPersonsAndMedicalRecordFromAddressTest() throws IOException, ParseException {
-        PersonStationMedicalDto personStationMedicalDto = weatherService.getPersonsAndMedicalRecordFromAddress("29 15th St");
-        Assert.assertEquals("PersonStationMedical(personModelList=[PersonModel(firstName=Jonanathan, lastName=Marrack, address=29 15th St, city=Culver, zip=97451, phone=841-874-6513, email=drk@email.com)], medicalRecordModelList=[MedicalRecordModel(firstName=Jonanathan, lastName=Marrack, birthdate=01/03/1989, medications=[], allergies=[])], listStation=[2])", personStationMedicalDto.toString());
+        PersonStationMedicalDto personStationMedicalDto = weatherService.getPersonsAndMedicalRecordFromAddress("748 Townings Dr");
+        Assert.assertEquals(2, personStationMedicalDto.getPersons().size());
     }
 
     @Test
@@ -45,13 +45,13 @@ class WeatherServiceImplTest {
         stations.add("2");
 
         List<HomeDto> homeDtoList = weatherService.getHomeStationNumber(stations);
-        Assert.assertEquals(11, homeDtoList);
+        Assert.assertEquals(6, homeDtoList.size());
     }
 
     @Test
     void getPersonInfoTest() throws IOException, ParseException {
         PersonInfoDto listPersons = weatherService.getPersonInfo("Felicia", "Boyd");
-        Assert.assertEquals("PersonInfoDto(listPersonsInfo={PersonModel(firstName=John, lastName=Boyd, address=1509 Culver St, city=Culver, zip=97451, phone=841-874-6512, email=jaboyd@email.com)=MedicalRecordModel(firstName=Felicia, lastName=Boyd, birthdate=01/08/1986, medications=[tetracyclaz:650mg], allergies=[xilliathal])})", listPersons.toString());
+        Assert.assertEquals("PersonInfoDto(lastname=Boyd, firstname=Felicia, address=1509 Culver St, age=36, mail=jaboyd@email.com, medications=[tetracyclaz:650mg], allergies=[xilliathal])", listPersons.toString());
     }
 
     @Test

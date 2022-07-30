@@ -18,7 +18,7 @@ public class WeatherController {
     WeatherService weatherService;
 
     @GetMapping("/firestation")
-    List<StationsPersonsDto> getPersonsInfosWithFirestationNum(@RequestParam String stationNumber) throws IOException, ParseException {
+    StationsPersonsDto getPersonsInfosWithFirestationNum(@RequestParam String stationNumber) throws IOException, ParseException {
         return weatherService.getPersonsInfosWithFirestationNum(stationNumber);
     }
 

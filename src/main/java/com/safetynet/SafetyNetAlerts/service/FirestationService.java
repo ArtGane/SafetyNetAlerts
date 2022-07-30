@@ -41,6 +41,13 @@ public class FirestationService {
         return firestationModel;
     }
 
+    public FirestationModel getFirestation(String address) throws IOException, ParseException {
+        List<FirestationModel> firestationList = getFirestationsList();
+        FirestationModel firestationModel = firestationList.stream()
+                .filter(f -> f.getAddress().equals(address)).findFirst().orElse(null);
+        return firestationModel;
+    }
+
     public void deleteFirestation(FirestationModel firestation) throws IOException, ParseException {
         List<FirestationModel> firestationModelList = getFirestationsList();
         FirestationModel firestationModel = getFirestation(firestation.getStation(), firestation.getAddress());
@@ -73,4 +80,5 @@ public class FirestationService {
         infos.setFirestations(firestationModelList);
         accesInfos.setInfos(pathReel, infos);
     }
+
 }
