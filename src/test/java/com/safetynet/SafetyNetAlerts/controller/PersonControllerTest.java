@@ -39,7 +39,7 @@ class PersonControllerTest {
     @Test
     void createPersonTest() throws Exception {
         mockMvc.perform(
-                        post("/persons")
+                        post("/person")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObject.toString()))
                 .andExpect(status().isOk());
@@ -48,7 +48,7 @@ class PersonControllerTest {
     @Test
     void updatePersonTest() throws Exception {
         mockMvc.perform(
-                        put("/persons")
+                        put("/person")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObject.toString()))
                 .andExpect(status().isOk());
@@ -57,7 +57,7 @@ class PersonControllerTest {
     @Test
     void deletePersonTest() throws Exception {
         mockMvc.perform(
-                        delete("/persons")
+                        delete("/person")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObject.toString()))
                 .andExpect(status().isOk()).andReturn();

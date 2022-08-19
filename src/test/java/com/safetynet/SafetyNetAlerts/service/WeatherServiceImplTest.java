@@ -16,7 +16,7 @@ class WeatherServiceImplTest {
     @Test
     void getPersonsInfosWithFirestationNumTest() throws IOException, ParseException {
         StationsPersonsDto stationsPersonsDtoList = weatherService.getPersonsInfosWithFirestationNum("2");
-        Assert.assertEquals("[]", stationsPersonsDtoList.toString());
+        Assert.assertEquals("StationsPersonsDto(address=29 15th St, stationPersonsDtoObjectList=[StationPersonsDtoObject(lastname=Marrack, firstname=Jonanathan, address=29 15th St, phone=841-874-6513, childAlertDto=ChildAlertDto(adults=[PersonModel(firstName=Jonanathan, lastName=Marrack, address=29 15th St, city=Culver, zip=97451, phone=841-874-6513, email=drk@email.com)], children=[]))])", stationsPersonsDtoList.toString());
     }
 
     @Test
@@ -58,6 +58,12 @@ class WeatherServiceImplTest {
     void getEmailByCityTest() throws IOException, ParseException {
         List<String> listEmail = weatherService.getEmailByCity("Culver");
         Assert.assertEquals(23, listEmail.size());
+    }
+
+    @Test
+    void getEmailByCityWrongTest() throws IOException, ParseException {
+        List<String> listEmail = weatherService.getEmailByCity("Medusecity");
+        Assert.assertEquals("[]", listEmail.toString());
     }
 
 }

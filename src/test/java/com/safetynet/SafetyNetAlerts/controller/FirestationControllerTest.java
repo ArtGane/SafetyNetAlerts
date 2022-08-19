@@ -41,7 +41,7 @@ class FirestationControllerTest {
     @Test
     void updateFirestationsTest() throws Exception {
         mockMvc.perform(
-                        post("/firestations")
+                        post("/firestation")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObject.toString()))
                 .andExpect(status().isOk());
@@ -50,7 +50,7 @@ class FirestationControllerTest {
     @Test
     void createFirestationsTest() throws Exception {
         mockMvc.perform(
-                        put("/persons")
+                        put("/firestation")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObject.toString()))
                 .andExpect(status().isOk());
@@ -59,7 +59,7 @@ class FirestationControllerTest {
     @Test
     void deleteFirestationsTest() throws Exception {
         mockMvc.perform(
-                        delete("/persons")
+                        delete("/firestation")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObject.toString()))
                 .andExpect(status().isOk()).andReturn();

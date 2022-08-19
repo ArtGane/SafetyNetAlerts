@@ -34,36 +34,31 @@ public class FirestationService {
         return infos.getFirestations();
     }
 
-    public FirestationModel getFirestation(String station, String address) throws IOException, ParseException {
-        List<FirestationModel> firestationList = getFirestationsList();
-        FirestationModel firestationModel = firestationList.stream()
-                .filter(f -> f.getStation() == station && f.getAddress().equals(address)).findFirst().orElse(null);
-        return firestationModel;
-    }
-
     public FirestationModel getFirestation(String address) throws IOException, ParseException {
         List<FirestationModel> firestationList = getFirestationsList();
-        FirestationModel firestationModel = firestationList.stream()
+        return firestationList.stream()
                 .filter(f -> f.getAddress().equals(address)).findFirst().orElse(null);
-        return firestationModel;
     }
 
-    public void deleteFirestation(FirestationModel firestation) throws IOException, ParseException {
-        List<FirestationModel> firestationModelList = getFirestationsList();
-        FirestationModel firestationModel = getFirestation(firestation.getStation(), firestation.getAddress());
+    public void deleteFirestation(FirestationModel firestation) {
+        try {
+            List<FirestationModel> firestationModelList = getFirestationsList();
+            FirestationModel firestationModel = getFirestation(firestation.getAddress());
 
-        firestationModelList.remove(firestationModel);
-        infos.setFirestations(firestationModelList);
+            firestationModelList.remove(firestationModel);
+            infos.setFirestations(firestationModelList);
 
-        accesInfos.setInfos(pathReel, infos);
-
-        Assert.assertFalse(firestationModelList.contains(firestation));
-        logger.info(firestationModelList);
+            accesInfos.setInfos(pathReel, infos);
+            logger.info(firestationModelList);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void createFirestation(FirestationModel firestation) throws IOException, ParseException {
         List<FirestationModel> firestationModelList = getFirestationsList();
         firestationModelList.add(firestation);
+
         infos.setFirestations(firestationModelList);
         accesInfos.setInfos(pathReel, infos);
 
@@ -72,7 +67,7 @@ public class FirestationService {
 
     public void updateFirestation(FirestationModel firestation) throws IOException, ParseException {
         List<FirestationModel> firestationModelList = getFirestationsList();
-        FirestationModel firestationModel = getFirestation(firestation.getStation(), firestation.getAddress());
+        FirestationModel firestationModel = getFirestation(firestation.getAddress());
 
         firestationModelList.remove(firestationModel);
         firestationModelList.add(firestation);

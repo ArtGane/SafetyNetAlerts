@@ -11,5 +11,4 @@ class UtilsTest {
         int testAge = Utils.getAge("03/06/1984");
         assertEquals(38, testAge);
     }
-
 }

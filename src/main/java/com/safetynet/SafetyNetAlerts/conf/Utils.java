@@ -16,17 +16,11 @@ public abstract class Utils {
 
     private static int calculateAge(int year) {
         int dateToday = LocalDate.now().getYear();
-        int calcul = dateToday - year;
-        return calcul;
+        return dateToday - year;
     }
 
     public static int getAge(String birthdate) {
         return calculateAge(extractYear(birthdate));
-    }
-
-    public static List<HomeDto> treePersonsHome(List<HomeDto> personsHome) {
-        List<HomeDto> homeDtoList = new ArrayList<>();
-        return homeDtoList;
     }
 
 }

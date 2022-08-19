@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,7 @@ public class WeatherServiceImpl implements WeatherService {
 
         // Get address from number of station
         String address = firestationModelList.stream()
-                .filter(f -> f.getStation().equals(stationNum)).map(f -> f.getAddress()).findAny().orElse(null);
+                .filter(f -> f.getStation().equals(stationNum)).map(FirestationModel::getAddress).findAny().orElse(null);
 
             stationsPersonsDto.setAddress(address);
 
@@ -101,15 +102,13 @@ public class WeatherServiceImpl implements WeatherService {
             List<PersonModel> personModelList = personService.getPersonsList();
 
             List<String> numStationList = firestationModelList.stream()
-                    .filter(f -> f.getStation().equals(firestationNumber)).map(f -> f.getAddress()).collect(Collectors.toList());
+                    .filter(f -> f.getStation().equals(firestationNumber)).map(FirestationModel::getAddress).collect(Collectors.toList());
 
             for (String address : numStationList) {
                 phonePersons = personModelList.stream()
-                        .filter(p -> p.getAddress().equals(address)).map(p -> p.getPhone()).collect(Collectors.toList());
+                        .filter(p -> p.getAddress().equals(address)).map(PersonModel::getPhone).collect(Collectors.toList());
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
 
@@ -173,7 +172,7 @@ public class WeatherServiceImpl implements WeatherService {
 
         for (String station : stations) {
             addresses.addAll(firestationModelList.stream()
-                    .filter(f -> f.getStation().equals(station)).map(f -> f.getAddress()).collect(Collectors.toList()));
+                    .filter(f -> f.getStation().equals(station)).map(FirestationModel::getAddress).collect(Collectors.toList()));
         }
 
         for (String address : addresses) {
@@ -254,18 +253,17 @@ public class WeatherServiceImpl implements WeatherService {
             List<PersonModel> personModelList = personService.getPersonsList();
 
             emailList = personModelList.stream()
-                    .filter(p -> p.getCity().equals(city)).map(p -> p.getEmail()).toList();
+                    .filter(p -> p.getCity().equals(city)).map(PersonModel::getEmail).toList();
 
-        } catch (IOException e) {
-            log.error("");
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            log.error("");
+            if (emailList.isEmpty()) {
+            log.error("City doesn't exist in our base");
+            }
+
+        } catch (IOException | ParseException e) {
             throw new RuntimeException(e);
         }
 
         return emailList;
-
     }
 
 }

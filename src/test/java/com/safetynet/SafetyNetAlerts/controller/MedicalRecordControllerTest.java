@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -37,14 +38,14 @@ class MedicalRecordControllerTest {
         jsonObject.put("firstName", "John");
         jsonObject.put("lastName", "Boyd");
         jsonObject.put("birthdate", "03/06/1984");
-        jsonObject.put("medications", "");
-        jsonObject.put("allergies", "");
+        jsonObject.put("medications", new ArrayList<>());
+        jsonObject.put("allergies", new ArrayList<>());
     }
 
     @Test
     void updateMedicalRecordTest() throws Exception {
         mockMvc.perform(
-                        post("/medicalrecords")
+                        post("/medicalRecord")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObject.toString()))
                 .andExpect(status().isOk());
@@ -53,7 +54,7 @@ class MedicalRecordControllerTest {
     @Test
     void createMedicalRecordTest() throws Exception {
         mockMvc.perform(
-                        put("/medicalrecords")
+                        put("/medicalRecord")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObject.toString()))
                 .andExpect(status().isOk());
@@ -62,7 +63,7 @@ class MedicalRecordControllerTest {
     @Test
     void deleteMedicalRecordTest() throws Exception {
         mockMvc.perform(
-                        delete("/medicalrecords")
+                        delete("/medicalRecord")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObject.toString()))
                 .andExpect(status().isOk()).andReturn();

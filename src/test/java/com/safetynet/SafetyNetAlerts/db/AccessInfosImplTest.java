@@ -1,5 +1,6 @@
 package com.safetynet.SafetyNetAlerts.db;
 
+import com.safetynet.SafetyNetAlerts.conf.Constantes;
 import com.safetynet.SafetyNetAlerts.model.FirestationModel;
 import com.safetynet.SafetyNetAlerts.model.MedicalRecordModel;
 import com.safetynet.SafetyNetAlerts.model.PersonModel;
@@ -18,8 +19,8 @@ public class AccessInfosImplTest {
 
     private AccessInfos accessInfos = new AccessInfosImpl();
 
-    private String pathReel = "C:\\Users\\argan\\IdeaProjects\\SafetyNetAlerts\\src\\main\\resources\\infos.json";
-    private String pathTest = "C:\\Users\\argan\\IdeaProjects\\SafetyNetAlerts\\src\\main\\resources\\data.json";
+    private String pathReel = Constantes.PATH_REEL;
+    private String pathTest = Constantes.PATH_TEST;
 
     @Test
     public void getInfosShouldReturnCompleteListOfPersons() throws IOException, ParseException {
@@ -91,7 +92,7 @@ public class AccessInfosImplTest {
         medicalRecordModel.setLastName("Ou");
         medicalRecordModel.setBirthdate("12/12/1986");
         medicalRecordModel.setMedications(medications);
-        medicalRecordModel.setAllergies(new ArrayList<String>());
+        medicalRecordModel.setAllergies(new ArrayList<>());
 
         medicalRecordList.add(medicalRecordModel);
         infos.setFirestations(firestationList);

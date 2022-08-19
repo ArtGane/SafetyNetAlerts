@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@RequestMapping("/medicalrecords")
+@RequestMapping("/medicalRecord")
 @RestController
 public class MedicalRecordController {
 

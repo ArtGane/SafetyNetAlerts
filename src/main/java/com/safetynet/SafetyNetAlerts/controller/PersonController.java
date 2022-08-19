@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("/persons")
+@RequestMapping("/person")
 @RestController
 public class PersonController {
 
